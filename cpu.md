@@ -115,4 +115,3 @@ Several aspects can influence CPU behavior, from the nature of the Flask endpoin
 ## 9. Concluding Remarks
 
 This experiment provided valuable insights into system performance under varying loads. By employing tools like Gunicorn and ApacheBench, we could simulate high-traffic scenarios and understand how our Flask application and the system respond.
-
