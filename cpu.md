@@ -9,13 +9,13 @@ Before starting with the experiments, ensure you have the necessary tools and li
 - **Flask**: The micro web framework for Python.
   
   ```bash
-  pip install Flask
+  pip3 install Flask
   ```
 
 - **Gunicorn**: The WSGI server to serve the Flask application.
   
   ```bash
-  pip install gunicorn
+  pip3 install gunicorn3
   ```
 
 - **ApacheBench**: Typically comes pre-installed with the Apache HTTP server package. Depending on your system, you might need to install the Apache HTTP server or use a package manager specific command.
