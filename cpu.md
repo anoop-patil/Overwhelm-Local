@@ -63,16 +63,56 @@ Command to launch the Flask app with Gunicorn:
 gunicorn3 -w 12 app_cpu:app
 ```
 
-## 5. Key Observations
+---
+
+## 5. Experiment Results and Analysis
+
+After setting up our environment, running the Flask application, and initiating the desired load with ApacheBench, the following results were observed:
+
+```
+ab -n 20000 -c 1000 http://127.0.0.1:8000/cpu-overload?iterations=1000
+...
+Concurrency Level:      1000
+Time taken for tests:   242.421 seconds
+Complete requests:      20000
+Failed requests:        0
+Total transferred:      3320000 bytes
+HTML transferred:       140000 bytes
+Requests per second:    82.50 [#/sec] (mean)
+Time per request:       12121.062 [ms] (mean)
+Time per request:       12.121 [ms] (mean, across all concurrent requests)
+...
+```
+
+## 6. What does this mean?
+
+1. **Concurrency Level**: The test was performed with a concurrency level of 1000. This means that ApacheBench was making 1000 requests at the same time continuously until all 20,000 requests were completed.
+
+2. **Time taken for tests**: It took approximately 242.421 seconds (or just over 4 minutes) to complete all 20,000 requests.
+
+3. **Complete requests**: A total of 20,000 requests were made to the Flask application.
+
+4. **Requests per second**: On average, the Flask application served 82.50 requests per second during the duration of the test.
+
+5. **Time per request (mean)**: On average, each request took about 12.121 ms when considering all concurrent requests. However, when looking at them individually (without accounting for concurrency), each request took around 12.121 seconds.
+
+6. **Connection Times**: The 'Processing' time, which is the time taken from the request being sent to the response being received, had a mean time of 11780ms (or about 11.78 seconds). 50% of all requests were processed within 12.176 seconds.
+
+7. **Percentage of the requests**: This section provides a distribution of how the requests were served. For instance, 90% of the requests were served within 13.786 seconds, and the longest time taken for a request was 14.320 seconds.
+
+This experiment underscores the importance of tuning and scalability. Even though our application was intentionally CPU-intensive, in real-world scenarios, understanding the performance characteristics of a service under different loads is crucial for capacity planning and optimization.
+
+## 7. Key Observations
 
 - **Concurrency vs. Parallelism**: Gunicorn, with multiple workers, introduces parallelism. This means we can process multiple requests simultaneously, especially on systems with multiple CPU cores.
 
 - **CPU Utilization Patterns**: A notable observation was the initial CPU usage spiking to 100% followed by a drop and stabilization around 60%.
 
-## 6. Factors Impacting Performance
+## 8. Factors Impacting Performance
 
 Several aspects can influence CPU behavior, from the nature of the Flask endpoint, Gunicorn's request handling mechanism, system processes, to other I/O operations. 
 
-## 7. Concluding Remarks
+## 9. Concluding Remarks
 
 This experiment provided valuable insights into system performance under varying loads. By employing tools like Gunicorn and ApacheBench, we could simulate high-traffic scenarios and understand how our Flask application and the system respond.
+
